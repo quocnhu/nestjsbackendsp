@@ -1,34 +1,26 @@
-import { Controller, Post, Body, Res, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
-import type { Response } from 'express';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { Roles } from './roles.decorator';
-import { RolesGuard } from './roles.guard';
-import { UserRole } from '../common/constants';
+import { LoginDto } from '@/auth/dtos/login.dto';
+import { RegisterDto } from '@/auth/dtos/register.dto';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('register')
-  async register(@Body() dto: RegisterDto) {
-    return this.authService.register(dto);
-  }
-
+  @Public()
   @Post('login')
-  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
-    const {user,token} = await this.authService.login(dto);
-    res.cookie('jwt', token, { httpOnly: true });
-    return { message: 'Login successful', user };
+  async login(@Body() loginDto: LoginDto) {
+    const user = await this.authService.validateUser(
+      loginDto.email,
+      loginDto.password,
+    );
+    return this.authService.login(user);
   }
 
-  // Example protected route
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
-  @Get('admin')
-  getAdmin() {
-    return { message: 'You are an admin' };
+  @Public()
+  @Post('register')
+  async register(@Body() registerDto: RegisterDto) {
+    return this.authService.register(registerDto);
   }
 }

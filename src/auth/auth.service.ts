@@ -1,52 +1,34 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
-import * as bcrypt from 'bcrypt';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/schemas/user.schema';
-import { UserRole } from '../common/constants';
+import * as bcrypt from 'bcryptjs';
+import { UsersService } from '../users/users.service';
+import { CreateUserDto } from '../users/dtos/create-user.dto';
+
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService, private jwtService: JwtService) { }
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
-  async register(dto: RegisterDto) {
-    const existing = await this.usersService.findByEmail(dto.email);
-    if (existing) {
-      throw new BadRequestException('Email already registered');
-    }
-
-    const hashedPassword = await bcrypt.hash(dto.password, 10);
-
-    const user = await this.usersService.create({
-      email: dto.email,
-      password: hashedPassword,
-      role: (dto.role as UserRole) || UserRole.USER,
-    });
-
-    return {
-      email: user.email,
-      role: user.role,
-      message: 'User registered successfully',
-    };
-  }
-
-
-  async login(dto: LoginDto) {
-    const user = await this.usersService.findByEmail(dto.email);
+  async validateUser(email: string, pass: string) {
+    const user = await this.usersService.findByEmail(email);
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
-    const isMatch = await bcrypt.compare(dto.password, user.password);
+    const isMatch = await bcrypt.compare(pass, user.password);
     if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
-    const payload = { sub: user._id, email: user.email, role: user.role };
-    const token = this.jwtService.sign(payload);
+    return user;
+  }
 
+  async login(user: any) {
+    const payload = { sub: user._id, email: user.email, roles: user.roles };
     return {
-      token,
-      message: 'Login successful',
-      user: { email: user.email, role: user.role }
+      access_token: this.jwtService.sign(payload),
     };
   }
 
+  async register(dto: CreateUserDto) {
+    return this.usersService.create(dto);
+  }
 }
