@@ -36,8 +36,9 @@ export class PermissionGuard implements CanActivate {
     if (!user) throw new ForbiddenException('User not authenticated');
 
     // Always fetch fresh user from DB
-    const dbUser = await this.usersService.findById(user._id).populate('roles');
-
+    // const dbUser = await this.usersService.findById(user._id).populate('roles'); populate not working here
+    
+    const dbUser = await this.usersService.findById(user._id)
     if (!dbUser) throw new ForbiddenException('User not found');
 
     if (!requiredRoles || requiredRoles.length === 0) return true;

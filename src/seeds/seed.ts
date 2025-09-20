@@ -38,3 +38,10 @@ async function bootstrap() {
 }
 
 bootstrap();
+
+
+// Why?
+
+// Your RolesService.create() probably returns a Role (class/interface), not a RoleDocument.
+
+// Only Mongoose Documents (RoleDocument) have _id.

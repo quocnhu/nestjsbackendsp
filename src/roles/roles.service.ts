@@ -7,7 +7,7 @@ import { Role, RoleDocument } from './schemas/role.schema';
 export class RolesService {
   constructor(@InjectModel(Role.name) private roleModel: Model<RoleDocument>) {}
 
-  async create(name: string, permissions: string[] = []): Promise<Role> {
+  async create(name: string, permissions: string[] = []): Promise<RoleDocument> {
     const role = new this.roleModel({ name, permissions });
     return role.save();
   }
@@ -19,7 +19,7 @@ export class RolesService {
   async findById(id: string): Promise<Role> {
     const role = await this.roleModel.findById(id).exec();
     if (!role) throw new NotFoundException('Role not found');
-    return role;
+    return role; 
   }
 
   async findByName(name: string): Promise<Role> {

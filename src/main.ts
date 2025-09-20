@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PermissionGuard } from '@/common/guards/permission.guard';
-
+import { UsersService } from '@/users/users.service'; // need to import app.module for nestjs then this for typecript to know! crazy
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -14,11 +14,22 @@ async function bootstrap() {
       transform: true,            // Auto-transform payloads to DTO instances
     }),
   );
+  // CORS configuration
+  app.enableCors({
+    origin: ['http://localhost:4000'], // allowed origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],                   // allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'],            // allowed headers
+    exposedHeaders: ['Authorization'],                            // headers exposed to frontend
+    credentials: true,                                            // allow cookies
+    maxAge: 3600,                                                 // cache preflight response (in seconds)
+  });
+  //Set global prefix
+   app.setGlobalPrefix('api');
 
   // Register global guard (role + public check)
   const reflector = app.get(Reflector);
-  app.useGlobalGuards(new PermissionGuard(reflector));
-
+  const usersService = app.get(UsersService);
+  app.useGlobalGuards(new PermissionGuard(reflector, usersService));
   await app.listen(3000);
 }
 bootstrap();
