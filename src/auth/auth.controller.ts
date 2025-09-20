@@ -19,9 +19,9 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
-    const { token } = await this.authService.login(dto);
+    const {user,token} = await this.authService.login(dto);
     res.cookie('jwt', token, { httpOnly: true });
-    return { message: 'Login successful' };
+    return { message: 'Login successful', user };
   }
 
   // Example protected route
