@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DashboardService } from './dashboard.service';
-import { DashboardController } from './dashboard.controller';
-import { User, UserSchema } from '../users/schemas/user.schema';
-import { Role, RoleSchema } from '../roles/schemas/role.schema';
-import { Group, GroupSchema } from '../groups/schemas/group.schema';
+import { DashboardService } from '@/dashboard/dashboard.service';
+import { DashboardController } from '@/dashboard/dashboard.controller';
+import { User, UserSchema } from '@/users/schemas/user.schema';
+import { Role, RoleSchema } from '@/roles/schemas/role.schema';
+import { Group, GroupSchema } from '@/groups/schemas/group.schema';
 
 @Module({
   imports: [

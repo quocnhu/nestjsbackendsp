@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Role } from '../../roles/schemas/role.schema';
-import { User } from '../../users/schemas/user.schema';
+import { Role } from '@/roles/schemas/role.schema';
+import { User } from '@/users/schemas/user.schema';
 
 export type GroupDocument = Group & Document;
 

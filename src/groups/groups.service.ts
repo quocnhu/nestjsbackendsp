@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Group, GroupDocument } from './schemas/group.schema';
+import { Group, GroupDocument } from '@/groups/schemas/group.schema';
 
 @Injectable()
 export class GroupsService {

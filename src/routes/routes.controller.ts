@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Body, Param } from '@nestjs/common';
-import { RoutesService } from './routes.service';
-import { Route } from './schemas/route.schema';
+import { RoutesService } from '@/routes/routes.service';
+import { Route } from '@/routes/schemas/route.schema';
 
 @Controller('routes')
 export class RoutesController {

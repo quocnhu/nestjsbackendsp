@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Body, Param } from '@nestjs/common';
-import { GroupsService } from './groups.service';
-import { Group } from './schemas/group.schema';
+import { GroupsService } from '@/groups/groups.service';
+import { Group } from '@/groups/schemas/group.schema';
 
 @Controller('groups')
 export class GroupsController {

@@ -1,26 +1,49 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "target": "ES2023",
-    "sourceMap": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "outDir": "./dist",
-     "baseUrl": "./src",            // ✅ root dir
-    "paths": {                  // ✅ add this
+    "baseUrl": "./src",
+    "paths": {
       "@/*": ["*"]
     },
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "removeComments": true,
     "incremental": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "sourceMap": true
   }
 }
+
+// {
+//   "compilerOptions": {
+//     "esModuleInterop": true,
+//     "allowSyntheticDefaultImports": true,
+//     "module": "nodenext",
+//     "moduleResolution": "nodenext",
+//     "resolvePackageJsonExports": true,
+//     "esModuleInterop": true,
+//     "isolatedModules": true,
+//     "declaration": true,
+//     "removeComments": true,
+//     "emitDecoratorMetadata": true,
+//     "experimentalDecorators": true,
+//     "allowSyntheticDefaultImports": true,
+//     "target": "ES2023",
+//     "sourceMap": true,
+//     "outDir": "./dist",
+//      "baseUrl": "./src",            // ✅ root dir
+//     "paths": {                  // ✅ add this
+//       "@/*": ["*"]
+//     },
+//     "incremental": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "skipLibCheck": true
+//   }
+// }

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Permission, PermissionDocument } from './schemas/permission.schema';
+import { Permission, PermissionDocument } from '@/permissions/schemas/permission.schema';
 
 @Injectable()
 export class PermissionsService {

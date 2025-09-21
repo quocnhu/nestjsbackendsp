@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Body, Param } from '@nestjs/common';
-import { PermissionsService } from './permissions.service';
-import { Permission } from './schemas/permission.schema';
+import { PermissionsService } from '@/permissions/permissions.service';
+import { Permission } from '@/permissions/schemas/permission.schema';
 
 @Controller('permissions')
 export class PermissionsController {

@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../app.module';
-import { UsersService } from '../users/users.service';
-import { RolesService } from '../roles/roles.service';
-import { PermissionsService } from '../permissions/permissions.service';
+import { AppModule } from '@/app.module';
+import { UsersService } from '@/users/users.service';
+import { RolesService } from '@/roles/roles.service';
+import { PermissionsService } from '@/permissions/permissions.service';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);

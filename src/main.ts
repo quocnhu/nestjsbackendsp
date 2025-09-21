@@ -1,6 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from '@/app.module';
 import { PermissionGuard } from '@/common/guards/permission.guard';
 import { UsersService } from '@/users/users.service'; // need to import app.module for nestjs then this for typecript to know! crazy
 async function bootstrap() {

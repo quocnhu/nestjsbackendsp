@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDocument } from '../users/schemas/user.schema';
-import { Role, RoleDocument } from '../roles/schemas/role.schema';
-import { Group, GroupDocument } from '../groups/schemas/group.schema';
+import { User, UserDocument } from '@/users/schemas/user.schema';
+import { Role, RoleDocument } from '@/roles/schemas/role.schema';
+import { Group, GroupDocument } from '@/groups/schemas/group.schema';
 
 @Injectable()
 export class DashboardService {
