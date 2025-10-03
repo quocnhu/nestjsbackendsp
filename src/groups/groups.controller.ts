@@ -1,23 +1,23 @@
-import { Controller, Post, Get, Body, Param } from '@nestjs/common';
-import { GroupsService } from '@/groups/groups.service';
-import { Group } from '@/groups/schemas/group.schema';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { GroupsService } from './groups.service';
+import { CreateGroupDto } from './dto/create-group.dto';
 
 @Controller('groups')
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Post()
-  create(@Body() body: { name: string; users?: string[]; roles?: string[] }): Promise<Group> {
-    return this.groupsService.create(body.name, body.users || [], body.roles || []);
+  create(@Body() dto: CreateGroupDto) {
+    return this.groupsService.create(dto);
   }
 
   @Get()
-  findAll(): Promise<Group[]> {
+  findAll() {
     return this.groupsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Group> {
+  findOne(@Param('id') id: string) {
     return this.groupsService.findById(id);
   }
 }

@@ -1,40 +1,26 @@
 import { Controller, Post, Body, Res } from '@nestjs/common';
-import { AuthService } from '@/auth/auth.service';
-import { LoginDto } from '@/auth/dtos/login.dto';
-import { RegisterDto } from '@/auth/dtos/register.dto';
-import { Public } from '@/common/decorators/public.decorator';
-import type { Response } from 'express';
+import { Response } from 'express';
+import { AuthService } from './auth.service';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {} // 👈 inject service
+
+  @Public()
+  @Post('register')
+  async register(@Body() dto: RegisterDto) {
+    return this.authService.register(dto);
+  }
 
   @Public()
   @Post('login')
   async login(
     @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) res: Response, // ✅ inject res
+    @Res({ passthrough: true }) res: Response,
   ) {
-    const user = await this.authService.validateUser(
-      loginDto.email,
-      loginDto.password,
-    );
-    const token = await this.authService.login(user);
-
-    // ✅ set cookie
-    res.cookie('access_token', token, {
-      httpOnly: true,
-      secure: false, // use true with HTTPS
-      sameSite: 'strict',
-      maxAge: 1000 * 60 * 60, // 1 hour
-    });
-
-    return { message: 'Login successful' };
-  }
-
-  @Public()
-  @Post('register')
-  async register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto);
+    return this.authService.login(loginDto, res);
   }
 }

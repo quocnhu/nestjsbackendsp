@@ -1,23 +1,18 @@
-import { Controller, Post, Get, Body, Param } from '@nestjs/common';
-import { PermissionsService } from '@/permissions/permissions.service';
-import { Permission } from '@/permissions/schemas/permission.schema';
+import { Controller, Get, Post, Body } from '@nestjs/common';
+import { PermissionsService } from './permissions.service';
+import { CreatePermissionDto } from './dto/create-permission.dto';
 
 @Controller('permissions')
 export class PermissionsController {
-  constructor(private readonly permissionsService: PermissionsService) {}
+  constructor(private readonly permsService: PermissionsService) {}
 
   @Post()
-  create(@Body() body: { resource: string; action: string }): Promise<Permission> {
-    return this.permissionsService.create(body.resource, body.action);
+  create(@Body() dto: CreatePermissionDto) {
+    return this.permsService.create(dto);
   }
 
   @Get()
-  findAll(): Promise<Permission[]> {
-    return this.permissionsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string): Promise<Permission> {
-    return this.permissionsService.findById(id);
+  findAll() {
+    return this.permsService.findAll();
   }
 }
